@@ -21,8 +21,8 @@ public final class NormalEnemyDrawer implements EntityDrawer {
 
 	@Override
 	public void draw(long tickCount, @Nonnull GraphicsContext graphicsContext, @Nonnull GameEntity entity, double screenPosX, double screenPosY, double screenWidth, double screenHeight, double zoom) {
-		graphicsContext.setFill(Color.DARKMAGENTA);
-		graphicsContext.fillRoundRect(screenPosX, screenPosY, screenWidth, screenHeight, 4, 4);
+		//graphicsContext.setFill(Color.DARKMAGENTA);
+		//graphicsContext.fillRoundRect(screenPosX, screenPosY, screenWidth, screenHeight, 4, 4);
 		graphicsContext.drawImage(image, screenPosX, screenPosY, screenWidth, screenHeight);
 	}
 }
