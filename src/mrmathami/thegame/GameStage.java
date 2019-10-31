@@ -38,9 +38,10 @@ public final class GameStage {
 				for (int y = 0; y < height; y++) {
 					for (int x = 0; x < width; x++) {
 						final int value = scanner.nextInt();
-						if (value == 0) {
-							entities.add(new Road(0, x, y));
-						} else if (value == 1) {
+						if (value != 0) {
+							entities.add(new Road(0, x, y, value));
+							System.out.println(value);
+						} else if (value == 0) {
 							entities.add(new Mountain(0, x, y));
 						} else {
 							throw new InputMismatchException("Unexpected value! Input value: " + value);

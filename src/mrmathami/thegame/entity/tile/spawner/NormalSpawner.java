@@ -12,7 +12,7 @@ public final class NormalSpawner extends AbstractSpawner<NormalEnemy> {
 
 	@Nonnull
 	@Override
-	protected final NormalEnemy doSpawn(long createdTick, double posX, double posY) {
+	public final NormalEnemy doSpawn(long createdTick, double posX, double posY) {
 		return new NormalEnemy(createdTick, posX, posY);
 	}
 }

@@ -29,7 +29,7 @@ public final class Config {
 	 * Num of tiles the screen can display if fieldZoom is TILE_SIZE,
 	 * in other words, the texture will be display as it without scaling.
 	 */
-	public static final long TILE_VERTICAL = 20;
+	public static final long TILE_VERTICAL = 22;
 	/**
 	 * An arbitrary number just to make some code run a little faster.
 	 * Do not touch.

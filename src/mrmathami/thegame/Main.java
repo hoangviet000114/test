@@ -4,6 +4,9 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.FontSmoothingType;
 import javafx.stage.Stage;
@@ -36,11 +39,20 @@ public final class Main extends Application {
 //		canvas.setOnMouseClicked(...);
 //		canvas.setOnMouseMoved(...);
 
-
 		primaryStage.setResizable(false);
 		primaryStage.setTitle(Config.GAME_NAME);
 		primaryStage.setOnCloseRequest(gameController::closeRequestHandler);
-		primaryStage.setScene(new Scene(new StackPane(canvas)));
+
+
+		Image image = new Image("file:E:\\GITTTTTTT\\test\\IMG\\Mountain\\1.png");
+		Button bttemp = new Button();
+		bttemp.setGraphic(new ImageView(image));
+		StackPane stp = new StackPane(canvas);
+		stp.getChildren().add(bttemp);
+
+		primaryStage.setScene(new Scene(stp));
+
+		//primaryStage.setScene(new Scene(new StackPane(canvas)));
 		primaryStage.show();
 
 		gameController.start();

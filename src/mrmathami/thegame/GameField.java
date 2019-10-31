@@ -2,6 +2,8 @@ package mrmathami.thegame;
 
 
 import mrmathami.thegame.entity.*;
+import mrmathami.thegame.entity.enemy.NormalEnemy;
+import mrmathami.thegame.entity.tile.spawner.NormalSpawner;
 
 import javax.annotation.Nonnull;
 import java.util.*;
@@ -10,6 +12,10 @@ import java.util.*;
  * Game Field. Created from GameMap for each new stage. Represent the currently playing game.
  */
 public final class GameField {
+	/**
+	 * Viet's code :v spawner manager
+	 */
+
 	@Nonnull private final Set<GameEntity> entities = new LinkedHashSet<>(Config._TILE_MAP_COUNT);
 	@Nonnull private final Collection<GameEntity> unmodifiableEntities = Collections.unmodifiableCollection(entities);
 	@Nonnull private final List<GameEntity> spawnEntities = new ArrayList<>(Config._TILE_MAP_COUNT);
@@ -77,6 +83,7 @@ public final class GameField {
 	 */
 	public final void tick() {
 		this.tickCount += 1;
+		spawnEnemy();
 
 		// 1.1. Update UpdatableEntity
 		for (final GameEntity entity : entities) {
@@ -116,5 +123,11 @@ public final class GameField {
 			if (entity instanceof SpawnListener) ((SpawnListener) entity).onSpawn(this);
 		}
 		spawnEntities.clear();
+	}
+	private final void spawnEnemy(){
+		if (tickCount % 5 == 0) for (GameEntity entity : entities)
+			if (entity instanceof NormalSpawner){
+				doSpawn(((NormalSpawner) entity).doSpawn(tickCount, entity.getPosX(), entity.getPosY()));
+			}
 	}
 }
