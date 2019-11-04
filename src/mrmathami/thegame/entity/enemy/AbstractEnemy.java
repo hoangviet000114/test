@@ -19,6 +19,8 @@ public abstract class AbstractEnemy extends AbstractEntity implements UpdatableE
 	private long armor;
 	private double speed;
 	private long reward;
+	private long deltaDirectionX;
+	private long deltaDirectionY;
 
 	protected AbstractEnemy(long createdTick, double posX, double posY, double size, long health, long armor, double speed, long reward) {
 		super(createdTick, posX, posY, size, size);
@@ -69,6 +71,9 @@ public abstract class AbstractEnemy extends AbstractEntity implements UpdatableE
 				}
 			}
 		}
+
+		setDeltaDirectionX(enemyPosX, newPosX);
+		setDeltaDirectionY(enemyPosY, newPosY);
 		setPosX(newPosX);
 		setPosY(newPosY);
 	}
@@ -103,5 +108,51 @@ public abstract class AbstractEnemy extends AbstractEntity implements UpdatableE
 	@Override
 	public final boolean isDestroyed() {
 		return health <= 0L;
+	}
+
+	public final long getDeltaDirectionX() {
+		return deltaDirectionX;
+	}
+
+	public final long getDeltaDirectionY() {
+		return deltaDirectionY;
+	}
+
+	public final void setDeltaDirectionX(double posX, double newPosX) {
+		if (newPosX - posX > 0)
+			this.deltaDirectionX = 1;
+		else if (newPosX - posX < 0)
+			this.deltaDirectionX = -1;
+		else
+			this.deltaDirectionX = 0;
+	}
+
+	public final void setDeltaDirectionY(double posY, double newPosY) {
+		if (newPosY - posY > 0)
+			this.deltaDirectionY = 1;
+		else if (newPosY - posY < 0)
+			this.deltaDirectionY = -1;
+		else
+			this.deltaDirectionY = 0;
+	}
+
+	public final long getDirect(){
+		if (this.getDeltaDirectionX() == -1 && this.getDeltaDirectionY() == -1)
+			return 315;
+		if (this.getDeltaDirectionX() == -1 && this.getDeltaDirectionY() == 0)
+			return 270;
+		if (this.getDeltaDirectionX() == -1 && this.getDeltaDirectionY() == 1)
+			return 225;
+		if (this.getDeltaDirectionX() == 0 && this.getDeltaDirectionY() == 1)
+			return 180;
+		if (this.getDeltaDirectionX() == 1 && this.getDeltaDirectionY() == 1)
+			return 135;
+		if (this.getDeltaDirectionX() == 1 && this.getDeltaDirectionY() == 0)
+			return 90;
+		if (this.getDeltaDirectionX() == 1 && this.getDeltaDirectionY() == -1)
+			return 45;
+		if (this.getDeltaDirectionX() == 0 && this.getDeltaDirectionY() == -1)
+			return 0;
+		return 0;
 	}
 }

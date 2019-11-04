@@ -7,6 +7,8 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.FontSmoothingType;
 import javafx.stage.Stage;
@@ -23,19 +25,21 @@ public final class Main extends Application {
 	public void start(Stage primaryStage) {
 		final Canvas canvas = new Canvas(Config.SCREEN_WIDTH, Config.SCREEN_HEIGHT);
 		final GraphicsContext graphicsContext = canvas.getGraphicsContext2D();
-		final GameController gameController = new GameController(graphicsContext);
+//		final StackPane pane = new StackPane(canvas);
+		final AnchorPane pane = new AnchorPane(canvas);
+		final Scene scene = new Scene(pane);
+		final GameController gameController = new GameController(graphicsContext, pane, scene);
 
 		canvas.setFocusTraversable(true);
 		graphicsContext.setFontSmoothingType(FontSmoothingType.LCD);
 
-
 		// keyboard and mouse events to catch. Add if you need more
-		canvas.setOnKeyPressed(gameController::keyDownHandler);
-		canvas.setOnKeyReleased(gameController::keyUpHandler);
+		//canvas.setOnKeyPressed(gameController::keyDownHandler);
+		//canvas.setOnKeyReleased(gameController::keyUpHandler);
 //		canvas.setOnKeyTyped(...);
 
-		canvas.setOnMousePressed(gameController::mouseDownHandler);
-		canvas.setOnMouseReleased(gameController::mouseUpHandler);
+		//canvas.setOnMousePressed(gameController::mouseDownHandler);
+		//canvas.setOnMouseReleased(gameController::mouseUpHandler);
 //		canvas.setOnMouseClicked(...);
 //		canvas.setOnMouseMoved(...);
 
@@ -43,14 +47,7 @@ public final class Main extends Application {
 		primaryStage.setTitle(Config.GAME_NAME);
 		primaryStage.setOnCloseRequest(gameController::closeRequestHandler);
 
-
-		Image image = new Image("file:E:\\GITTTTTTT\\test\\IMG\\Mountain\\1.png");
-		Button bttemp = new Button();
-		bttemp.setGraphic(new ImageView(image));
-		StackPane stp = new StackPane(canvas);
-		stp.getChildren().add(bttemp);
-
-		primaryStage.setScene(new Scene(stp));
+		primaryStage.setScene(scene);
 
 		//primaryStage.setScene(new Scene(new StackPane(canvas)));
 		primaryStage.show();

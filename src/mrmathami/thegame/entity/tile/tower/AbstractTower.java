@@ -6,9 +6,11 @@ import mrmathami.thegame.entity.UpdatableEntity;
 import mrmathami.thegame.entity.bullet.AbstractBullet;
 import mrmathami.thegame.entity.enemy.AbstractEnemy;
 import mrmathami.thegame.entity.tile.AbstractTile;
+import mrmathami.thegame.entity.GameEntity;
 
 import javax.annotation.Nonnull;
 import java.util.Collection;
+import java.util.*;
 
 public abstract class AbstractTower<E extends AbstractBullet> extends AbstractTile implements UpdatableEntity {
 	private final double range;
@@ -30,7 +32,18 @@ public abstract class AbstractTower<E extends AbstractBullet> extends AbstractTi
 			// TODO: Find a target and spawn a bullet to that direction.
 			// Use GameEntities.getFilteredOverlappedEntities to find target in range
 			// Remember to set this.tickDown back to this.speed after shooting something.
-			// this.tickDown = speed;
+			Set<GameEntity> entities = field.getentities();
+			for(GameEntity entity : entities)
+				if(entity instanceof AbstractEnemy)
+					if(distance(entity.getPosX(), entity.getPosY(), this.getPosX(), this.getPosY()) <= this.range)
+					{
+						double posx = entity.getPosX() + entity.getWidth() / 2;
+						double posy = entity.getPosY() + entity.getHeight() / 3;
+						field.doSpawn(this.doSpawn(field.getTickCount(), (double) this.getPosX(), (double) this.getPosY(), posx, posy));
+						System.out.println(entity.getPosY());
+						break;
+					}
+			this.tickDown = speed;
 		}
 	}
 
@@ -48,4 +61,9 @@ public abstract class AbstractTower<E extends AbstractBullet> extends AbstractTi
 	 */
 	@Nonnull
 	protected abstract E doSpawn(long createdTick, double posX, double posY, double deltaX, double deltaY);
+
+	protected double distance(double x1, double y1, double x2, double y2)
+	{
+		return Math.sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
+	}
 }

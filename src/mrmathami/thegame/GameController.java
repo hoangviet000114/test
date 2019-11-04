@@ -2,10 +2,14 @@ package mrmathami.thegame;
 
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
+import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.WindowEvent;
 import mrmathami.thegame.drawer.GameDrawer;
@@ -65,7 +69,7 @@ public final class GameController extends AnimationTimer {
 	 *
 	 * @param graphicsContext the screen to draw on
 	 */
-	public GameController(GraphicsContext graphicsContext) {
+	public GameController(GraphicsContext graphicsContext, AnchorPane pane, Scene scene) {
 		// The screen to draw on
 		this.graphicsContext = graphicsContext;
 
@@ -75,7 +79,7 @@ public final class GameController extends AnimationTimer {
 
 		// The game field. Please consider create another way to load a game field.
 		// TODO: I don't have much time, so, spawn some wall then :)
-		this.field = new GameField(GameStage.load("/stage/demo.txt"));
+		this.field = new GameField(GameStage.load("/stage/demo.txt"), pane, scene);
 
 		// The drawer. Nothing fun here.
 		this.drawer = new GameDrawer(graphicsContext, field);
@@ -151,65 +155,5 @@ public final class GameController extends AnimationTimer {
 		stop();
 		Platform.exit();
 		System.exit(0);
-	}
-
-	/**
-	 * Key down handler.
-	 *
-	 * @param keyEvent the key that you press down
-	 */
-	final void keyDownHandler(KeyEvent keyEvent) {
-		final KeyCode keyCode = keyEvent.getCode();
-		if (keyCode == KeyCode.W) {
-		} else if (keyCode == KeyCode.S) {
-		} else if (keyCode == KeyCode.A) {
-		} else if (keyCode == KeyCode.D) {
-		} else if (keyCode == KeyCode.I) {
-		} else if (keyCode == KeyCode.J) {
-		} else if (keyCode == KeyCode.K) {
-		} else if (keyCode == KeyCode.L) {
-		}
-	}
-
-	/**
-	 * Key up handler.
-	 *
-	 * @param keyEvent the key that you release up.
-	 */
-	final void keyUpHandler(KeyEvent keyEvent) {
-		final KeyCode keyCode = keyEvent.getCode();
-		if (keyCode == KeyCode.W) {
-		} else if (keyCode == KeyCode.S) {
-		} else if (keyCode == KeyCode.A) {
-		} else if (keyCode == KeyCode.D) {
-		} else if (keyCode == KeyCode.I) {
-		} else if (keyCode == KeyCode.J) {
-		} else if (keyCode == KeyCode.K) {
-		} else if (keyCode == KeyCode.L) {
-		}
-	}
-
-	/**
-	 * Mouse down handler.
-	 *
-	 * @param mouseEvent the mouse button you press down.
-	 */
-	final void mouseDownHandler(MouseEvent mouseEvent) {
-//		mouseEvent.getButton(); // which mouse button?
-//		// Screen coordinate. Remember to convert to field coordinate
-//		drawer.screenToFieldPosX(mouseEvent.getX());
-//		drawer.screenToFieldPosY(mouseEvent.getY());
-	}
-
-	/**
-	 * Mouse up handler.
-	 *
-	 * @param mouseEvent the mouse button you release up.
-	 */
-	final void mouseUpHandler(MouseEvent mouseEvent) {
-//		mouseEvent.getButton(); // which mouse button?
-//		// Screen coordinate. Remember to convert to field coordinate
-//		drawer.screenToFieldPosX(mouseEvent.getX());
-//		drawer.screenToFieldPosY(mouseEvent.getY());
 	}
 }

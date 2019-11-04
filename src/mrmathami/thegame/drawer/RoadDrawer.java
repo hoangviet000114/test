@@ -12,13 +12,13 @@ import java.util.ArrayList;
 
 public final class RoadDrawer implements EntityDrawer {
 	//private Image image;
-	private ArrayList<Image> images = new ArrayList<Image>();
+	ArrayList<Image> images = new ArrayList<Image>();
 
 	public RoadDrawer(){
 		//image = new Image("file:E:\\GITTTTTTT\\test\\IMG\\Road\\1.png");
-		images.add(new Image("file:E:\\GITTTTTTT\\test\\IMG\\Road\\1.png") );
+		images.add(new Image("file:C:\\Users\\dell\\Desktop\\Defence-Tower-master\\IMG\\Road\\1.png"));
 		for (int i = 1; i <= 13; i++) {
-			images.add(new Image("file:E:\\GITTTTTTT\\test\\IMG\\Road\\" + String.valueOf(i) + ".png") );
+			images.add(new Image("file:C:\\Users\\dell\\Desktop\\Defence-Tower-master\\IMG\\Road\\" + String.valueOf(i) + ".png") );
 		}
 	}
 

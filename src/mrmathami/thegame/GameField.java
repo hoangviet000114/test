@@ -1,8 +1,13 @@
 package mrmathami.thegame;
 
 
+import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import mrmathami.thegame.entity.*;
 import mrmathami.thegame.entity.enemy.NormalEnemy;
+import mrmathami.thegame.entity.store.StoreManager;
 import mrmathami.thegame.entity.tile.spawner.NormalSpawner;
 
 import javax.annotation.Nonnull;
@@ -12,14 +17,11 @@ import java.util.*;
  * Game Field. Created from GameMap for each new stage. Represent the currently playing game.
  */
 public final class GameField {
-	/**
-	 * Viet's code :v spawner manager
-	 */
+	private final StoreManager store;
 
 	@Nonnull private final Set<GameEntity> entities = new LinkedHashSet<>(Config._TILE_MAP_COUNT);
 	@Nonnull private final Collection<GameEntity> unmodifiableEntities = Collections.unmodifiableCollection(entities);
 	@Nonnull private final List<GameEntity> spawnEntities = new ArrayList<>(Config._TILE_MAP_COUNT);
-
 	/**
 	 * Field width
 	 */
@@ -33,10 +35,12 @@ public final class GameField {
 	 */
 	private long tickCount;
 
-	public GameField(@Nonnull GameStage gameStage) {
+	public GameField(@Nonnull GameStage gameStage, AnchorPane pane, Scene scene) {
 		this.width = gameStage.getWidth();
 		this.height = gameStage.getHeight();
 		this.tickCount = 0;
+		store = new StoreManager(pane, scene, 0, 0, gameStage.getHeight(),
+				Config.TILE_HORIZONTAL, Config.TILE_VERTICAL - gameStage.getHeight());
 		entities.addAll(gameStage.getEntities());
 	}
 
@@ -58,6 +62,18 @@ public final class GameField {
 	@Nonnull
 	public final Collection<GameEntity> getEntities() {
 		return unmodifiableEntities;
+	}
+
+	/**
+	 * Đây là code của HMDA
+	 * @return
+	 */
+	public  final Set<GameEntity> getentities() {
+		return entities;
+	}
+
+	public final StoreManager getStore(){
+		return this.store;
 	}
 
 	/**
@@ -83,12 +99,12 @@ public final class GameField {
 	 */
 	public final void tick() {
 		this.tickCount += 1;
-		spawnEnemy();
 
 		// 1.1. Update UpdatableEntity
 		for (final GameEntity entity : entities) {
 			if (entity instanceof UpdatableEntity) ((UpdatableEntity) entity).onUpdate(this);
 		}
+		store.onUpdate(this);
 
 		// 1.2. Update EffectEntity & LivingEntity
 		for (final GameEntity entity : entities) {
@@ -101,7 +117,6 @@ public final class GameField {
 				}
 			}
 		}
-
 		// 1.3. Update DestroyableEntity
 		final List<GameEntity> destroyedEntities = new ArrayList<>(Config._TILE_MAP_COUNT);
 		for (final GameEntity entity : entities) {
@@ -110,7 +125,6 @@ public final class GameField {
 				destroyedEntities.add(entity);
 			}
 		}
-
 		// 2.1. Destroy entities
 		entities.removeAll(destroyedEntities);
 
@@ -123,11 +137,5 @@ public final class GameField {
 			if (entity instanceof SpawnListener) ((SpawnListener) entity).onSpawn(this);
 		}
 		spawnEntities.clear();
-	}
-	private final void spawnEnemy(){
-		if (tickCount % 5 == 0) for (GameEntity entity : entities)
-			if (entity instanceof NormalSpawner){
-				doSpawn(((NormalSpawner) entity).doSpawn(tickCount, entity.getPosX(), entity.getPosY()));
-			}
 	}
 }

@@ -10,10 +10,10 @@ import javax.annotation.Nonnull;
 import java.io.InputStream;
 
 public final class MountainDrawer implements EntityDrawer {
-	private Image image;
+	Image image;
 
 	public MountainDrawer(){
-		image = new Image("file:E:\\GITTTTTTT\\test\\IMG\\Mountain\\1.png");
+		image = new Image("file:C:\\Users\\dell\\Desktop\\Defence-Tower-master\\IMG\\Mountain\\1.png");
 	}
 
 	@Override

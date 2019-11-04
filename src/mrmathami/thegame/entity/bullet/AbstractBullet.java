@@ -12,7 +12,7 @@ public abstract class AbstractBullet extends AbstractEntity implements Updatable
 	private long tickDown;
 
 	protected AbstractBullet(long createdTick, double posX, double posY, double deltaX, double deltaY, double speed, long strength, long timeToLive) {
-		super(createdTick, posX, posY, 0.2, 0.2);
+		super(createdTick, posX, posY, 0.5, 0.5);
 		final double normalize = speed / Math.sqrt(deltaX * deltaX + deltaY * deltaY);
 		this.deltaX = deltaX * normalize;
 		this.deltaY = deltaY * normalize;
